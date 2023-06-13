@@ -1,0 +1,74 @@
+/* 
+*INTEGRANTES:
+*JOSÉ LUIS CÓRDOBA ROLDÁN
+*VALENTINA VALENCIA QUEJADA
+*OSMEL DAVID ZUÑIGA CONTRERAS
+*DUALBERT ANDRÉS MORELO OLIVARES
+*/
+
+/*LISTADO CON CONDICIONES*/
+
+-- Mostrar el id, nombre y apellido de los empleados con cargo Chef
+
+SELECT id, nombre, apellido
+FROM empleados
+WHERE cargo = 'Chef';
+
+
+-- Listado nombre, cantidad y precio total de productos ordenados en la mesa 7
+
+SELECT P.nombre, cantidad, precio*cantidad AS precio_total
+FROM ordenes INNER JOIN detalles_ordenes ON numero = numeroOrden INNER JOIN productos P ON cod = codProducto
+WHERE mesa = '7'
+ORDER BY precio*cantidad ASC;
+
+
+-- Listado de facturas generadas en el mes de agosto del año 2021, con el nombre del cliente y el empleado.
+
+SELECT F.numero, F.fecha, F.montoTotal, E.nombre AS empleado,  C.nombre AS cliente 
+FROM empleados E INNER JOIN ordenes O ON E.id = O.idEmpleado 
+INNER JOIN facturas F ON F.numeroOrden = O.numero 
+INNER JOIN clientes C ON F.idCliente = C.id
+WHERE F.fecha BETWEEN to_date('01/08/2021','dd/mm/yyyy') and to_date('31/08/2021','dd/mm/yyyy');
+--WHERE F.fecha >= to_date('01/08/2021','dd/mm/yyyy') and F.fecha <= to_date('31/08/2021','dd/mm/yyyy');
+
+/*-------------------------------*/
+
+/*FUNCIONES DE AGRUPACIÓN*/
+
+-- id, nombre y cantidad total, de los cliente hayan ordenado más 10 productos 
+
+SELECT C.id, C.nombre, SUM(cantidad) as cantidad_total
+FROM clientes C INNER JOIN facturas F ON F.idCliente = C.id
+INNER JOIN ordenes O ON F.numeroOrden = O.numero
+INNER JOIN detalles_ordenes D ON O.numero = D.numeroOrden
+GROUP BY C.id, C.nombre
+HAVING SUM(cantidad) > 10;
+
+-- Promedio de la ganacia total del año 2021
+
+SELECT AVG(SUM(montoTotal)) AS cantidad_total
+FROM facturas
+WHERE fecha BETWEEN to_date('01/01/2021','dd/mm/yyyy') and to_date('31/12/2021','dd/mm/yyyy')
+GROUP BY montoTotal;
+
+-- Identificación de empleados diferentes de 005 que hayan despachado 5 o más productos
+
+SELECT id, nombre, SUM(cantidad) AS cantidad_total
+FROM empleados INNER JOIN ordenes ON id = idEmpleado INNER JOIN detalles_ordenes ON numero = numeroOrden
+WHERE id <> '003' AND cargo = 'Mesero'
+GROUP BY id, nombre
+HAVING SUM(cantidad) >= 5
+ORDER BY  SUM(cantidad) DESC;
+
+/*-------------------------------*/
+
+/*FUNCIONES DE AGREGACIÓN*/
+
+-- Cantidad de productos despachados por el empleado 003
+
+SELECT SUM(cantidad) as Cantidad 
+FROM detalles_ordenes INNER JOIN ordenes ON numeroOrden=numero
+WHERE idEmpleado = '003';
+
+/*-------------------------------*/

@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.18.1.final using JasperReports Library version 6.18.1-9d75d1969e774d4f179fb3be8401e98a0e6d1611  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Factura" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="df013db5-f76e-44d3-b0df-bcbc46d93160">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<style name="Title" fontName="Times New Roman" fontSize="50" isBold="true"/>
+	<style name="SubTitle" forecolor="#736343" fontName="Arial" fontSize="18"/>
+	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
+	<style name="Detail" fontName="Arial" fontSize="12"/>
+	<style name="Row" mode="Transparent">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></conditionExpression>
+			<style backcolor="#E6DAC3"/>
+		</conditionalStyle>
+	</style>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="empleado" class="java.lang.String"/>
+	<field name="cliente" class="java.lang.String"/>
+	<field name="numeroFactura" class="java.lang.String"/>
+	<field name="fecha" class="java.lang.String"/>
+	<field name="producto" class="java.lang.String"/>
+	<field name="cantidad" class="java.lang.String"/>
+	<field name="precio" class="java.lang.String"/>
+	<field name="importe" class="java.lang.String"/>
+	<field name="total" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="208" splitType="Stretch">
+			<image onErrorType="Icon">
+				<reportElement x="0" y="0" width="164" height="126" uuid="1c003177-754c-448f-8ce1-16868856f545"/>
+			</image>
+			<staticText>
+				<reportElement style="Title" x="161" y="32" width="480" height="62" uuid="bc1ce1da-8232-46ea-be55-cec4abb986dd"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Agency FB" size="49"/>
+				</textElement>
+				<text><![CDATA[ASADOS UMAÑA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="SubTitle" x="351" y="94" width="68" height="22" uuid="f6a78448-8260-4445-a9e0-e3fb53b080d9"/>
+				<textElement textAlignment="Left">
+					<font fontName="Agency FB"/>
+				</textElement>
+				<text><![CDATA[Factura N°]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="30" y="150" width="100" height="30" forecolor="#736343" uuid="59c73258-5cd3-41d2-b3ec-d8ea29af52e5"/>
+				<textElement>
+					<font fontName="Agency FB" size="22"/>
+				</textElement>
+				<text><![CDATA[Atendido por:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="570" y="150" width="50" height="30" forecolor="#736343" uuid="20ef8255-8a05-42cb-b14c-5cb70de4d473"/>
+				<textElement>
+					<font fontName="Agency FB" size="22"/>
+				</textElement>
+				<text><![CDATA[Fecha:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="340" y="150" width="60" height="30" forecolor="#736343" uuid="f52fc76e-6b02-4320-aefd-d160d2eb7700"/>
+				<textElement>
+					<font fontName="Agency FB" size="22"/>
+				</textElement>
+				<text><![CDATA[Cliente:]]></text>
+			</staticText>
+			<frame>
+				<reportElement x="130" y="150" width="210" height="30" uuid="a3ff0750-0f52-44c0-ac6e-537ea29fdb2d"/>
+				<textField textAdjust="StretchHeight">
+					<reportElement x="0" y="0" width="210" height="30" uuid="72ed99d2-a8ac-4f62-91f0-ca6900448a65"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Agency FB" size="16"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{empleado}]]></textFieldExpression>
+				</textField>
+			</frame>
+			<frame>
+				<reportElement x="400" y="150" width="170" height="30" uuid="1a341daf-97c5-4e56-9f68-1bbd225f0607"/>
+				<textField textAdjust="StretchHeight">
+					<reportElement x="0" y="0" width="170" height="30" uuid="072b299f-abcd-43a1-8b46-14eb6dcf7345"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Agency FB" size="16"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{cliente}]]></textFieldExpression>
+				</textField>
+			</frame>
+			<frame>
+				<reportElement x="620" y="150" width="182" height="30" uuid="93ed3b4d-9c2e-4f16-b335-056a076cba50"/>
+				<textField textAdjust="StretchHeight">
+					<reportElement x="0" y="0" width="182" height="30" uuid="74bb42b7-12bb-4423-b301-8f33303ff6d5"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Agency FB" size="16"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{fecha}]]></textFieldExpression>
+				</textField>
+			</frame>
+			<frame>
+				<reportElement x="419" y="94" width="110" height="22" uuid="786370a6-80b8-4ea6-883b-28071141864f"/>
+				<textField textAdjust="StretchHeight">
+					<reportElement x="0" y="0" width="110" height="22" uuid="947e3a40-052a-4adf-8976-76fe3330814d"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Agency FB" size="16"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{numeroFactura}]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="51" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="0" width="802" height="1" uuid="e9d2002a-c8ee-4649-a258-640dad29110c">
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="1" y="1" width="300" height="30" forecolor="#736343" uuid="e8abb814-49dd-4e02-8d06-3cdff3e38824"/>
+				<textElement>
+					<font fontName="Agency FB" size="22" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PRODUCTO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="301" y="1" width="150" height="30" forecolor="#736343" uuid="c45d1b4f-4df0-413d-a398-062b042514a8"/>
+				<textElement textAlignment="Right">
+					<font fontName="Agency FB" size="22" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CANTIDAD]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="451" y="1" width="170" height="30" forecolor="#736343" uuid="53f0f101-702e-49f0-a3d7-89d5fa912fe6"/>
+				<textElement textAlignment="Right">
+					<font fontName="Agency FB" size="22" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PRECIO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="621" y="2" width="181" height="30" forecolor="#736343" uuid="c1eb5476-6ad6-4697-95b6-f82b1a053b16"/>
+				<textElement textAlignment="Right">
+					<font fontName="Agency FB" size="22" isBold="true"/>
+				</textElement>
+				<text><![CDATA[IMPORTE]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="30" splitType="Stretch">
+			<frame>
+				<reportElement style="Row" mode="Opaque" x="0" y="0" width="802" height="30" uuid="fa7cec56-4ec1-48e6-a26e-7266a995d174"/>
+				<textField textAdjust="StretchHeight">
+					<reportElement x="0" y="0" width="310" height="30" uuid="c96b763b-6cf3-4522-b982-b270a8defdcb">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="c67d5816-08f2-4267-ab30-afce7168f877"/>
+					</reportElement>
+					<textElement>
+						<font fontName="Agency FB" size="18"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{producto}]]></textFieldExpression>
+				</textField>
+				<textField textAdjust="StretchHeight">
+					<reportElement x="310" y="0" width="150" height="30" uuid="10fe5a48-b0fd-4180-a22e-a00c3fda8d8c">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="6e882330-5140-46f0-a52f-836eb4bbeba2"/>
+					</reportElement>
+					<textElement textAlignment="Right">
+						<font fontName="Agency FB" size="18"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{cantidad}]]></textFieldExpression>
+				</textField>
+				<textField textAdjust="StretchHeight">
+					<reportElement x="460" y="0" width="170" height="30" uuid="27706308-8a48-40f0-b9ee-440555f8fe73">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="da23fa49-e8ff-40c3-a7dd-3c4d501b978c"/>
+					</reportElement>
+					<textElement textAlignment="Right">
+						<font fontName="Agency FB" size="18"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{precio}]]></textFieldExpression>
+				</textField>
+				<textField textAdjust="StretchHeight">
+					<reportElement x="630" y="0" width="172" height="30" uuid="2ec1500b-5111-4e7f-bf4f-5125bfedfce0">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="5e05fdab-9592-48a0-9c29-55e7d2a9b640"/>
+					</reportElement>
+					<textElement textAlignment="Right">
+						<font fontName="Agency FB" size="18"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{importe}]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="38" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="3" width="802" height="1" uuid="fa5e88d5-a011-4e32-8f12-ce923f903111"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="581" y="5" width="49" height="30" forecolor="#736343" uuid="9ef5bc56-a9b4-4465-b201-b5b892b9758b"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Agency FB" size="22" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total:]]></text>
+			</staticText>
+			<frame>
+				<reportElement x="631" y="5" width="171" height="30" uuid="3be604c7-8491-4f29-bbf3-0a055135229b"/>
+				<textField textAdjust="StretchHeight">
+					<reportElement x="0" y="0" width="171" height="30" uuid="51913b22-8c30-462b-a7d7-62f1b19967bf"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Agency FB" size="22"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{total}]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="25" splitType="Stretch">
+			<frame>
+				<reportElement mode="Opaque" x="-21" y="1" width="843" height="24" forecolor="#D0B48E" backcolor="#F2EBDF" uuid="5d8169bd-4a75-48c8-8a68-6d3ad5ba9402"/>
+				<textField evaluationTime="Report">
+					<reportElement style="Column header" x="783" y="1" width="40" height="20" forecolor="#736343" uuid="e5e27efa-b599-499b-9ca3-848cb511cb7b"/>
+					<textElement verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="Column header" x="703" y="1" width="80" height="20" forecolor="#736343" uuid="18cfe1ca-f7d6-48b0-9827-28578b42a5e0"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+				</textField>
+				<textField pattern="EEEEE dd MMMMM yyyy">
+					<reportElement style="Column header" x="22" y="1" width="197" height="20" forecolor="#736343" uuid="fbce24bb-3cb1-44a3-8eec-8c067ddbe5b5"/>
+					<textElement verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

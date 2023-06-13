@@ -1,0 +1,150 @@
+/* 
+*INTEGRANTES:
+*JOSÉ LUIS CÓRDOBA ROLDÁN
+*VALENTINA VALENCIA QUEJADA
+*OSMEL DAVID ZUÑIGA CONTRERAS
+*DUALBERT ANDRÉS MORELO OLIVARES
+*/
+
+------ CREACION DE TABLESPACE  ---------
+
+-- Borrar el tablespace por si ya existe
+drop tablespace ts_asados including contents and datafiles;
+
+-- Crea el tablespace
+CREATE TABLESPACE ts_asados LOGGING
+DATAFILE 'C:\df_asados.dbf' size 10M
+extent management local segment space management auto; 
+
+drop user uAsados cascade;
+
+-- Crear el usuario tal cual como esta escrito para que se pueda hacer la conexión en el crud
+create user uAsados profile default 
+identified by asados 
+default tablespace ts_asados 
+temporary tablespace temp 
+account unlock; 
+ 
+--Asigna los permisos al usuario 
+grant connect, resource,dba to uAsados;
+
+-----------------------------------------
+
+
+-- CREACIÓN TABLA EMPLEADOS CON SUS CONSTRAINS
+
+CREATE TABLE empleados (
+    id        VARCHAR2(5) NOT NULL,
+    nombre    VARCHAR2(8) NOT NULL,
+    apellido  VARCHAR2(12) NOT NULL,
+    direccion VARCHAR2(20),
+    celular   VARCHAR2(10) NOT NULL,
+    telefono  VARCHAR2(10),
+    cargo     VARCHAR2(8) NOT NULL
+);
+
+ALTER TABLE empleados ADD CONSTRAINT empleados_pk PRIMARY KEY ( id );
+
+-- CREACIÓN TABLA ACCESOS CON SUS CONSTRAINS
+
+CREATE TABLE accesos (
+    empleadoid VARCHAR2(5) NOT NULL,
+    usuario    VARCHAR2(15) NOT NULL,
+    contra     VARCHAR2(20) NOT NULL
+);
+
+ALTER TABLE accesos ADD CONSTRAINT accesos_pk PRIMARY KEY ( empleadoid );
+
+ALTER TABLE accesos ADD CONSTRAINT accesos__un UNIQUE ( empleadoid );
+
+ALTER TABLE accesos
+    ADD CONSTRAINT accesos_empleados_fk FOREIGN KEY ( empleadoid )
+        REFERENCES empleados ( id );
+
+-- CREACIÓN TABLA PRODUCTOS CON SUS CONTRAINS Y CHEQUEOS
+
+CREATE TABLE productos (
+    cod    VARCHAR2(5) NOT NULL,
+    nombre VARCHAR2(15) NOT NULL,
+    precio NUMBER(8, 2) NOT NULL
+);
+
+ALTER TABLE productos ADD CONSTRAINT productos_pk PRIMARY KEY ( cod );
+
+ALTER TABLE productos ADD CONSTRAINT CK_saldo_producto CHECK (precio >=0);
+
+-- CREACIÓN TABLA CLIENTES CON SUS CONSTRAINS
+
+CREATE TABLE clientes (
+    id     VARCHAR2(5) NOT NULL,
+    nombre VARCHAR2(10) NOT NULL
+);
+
+ALTER TABLE clientes ADD CONSTRAINT clientes_pk PRIMARY KEY ( id );
+
+-- CREACIÓN TABLA ORDENES CON SUS CONSTRAINS, CHECKEO Y SECUENCIA
+
+CREATE TABLE ordenes (
+    numero     VARCHAR2(5) NOT NULL,
+    mesa       VARCHAR2(2) NOT NULL,
+    idempleado VARCHAR2(5) NOT NULL
+);
+
+ALTER TABLE ordenes ADD CONSTRAINT ordenes_pk PRIMARY KEY ( numero );
+
+ALTER TABLE ordenes
+    ADD CONSTRAINT ordenes_empleados_fk FOREIGN KEY ( idempleado )
+        REFERENCES empleados ( id );
+
+ALTER TABLE ordenes ADD CONSTRAINT CK_mesas_ordenes CHECK (mesa BETWEEN 0 AND 10);
+
+CREATE SEQUENCE numero_ordenes
+INCREMENT BY  1
+START WITH 1;
+
+-- CREACIÓN TABLA DETALLES_ORDENES CON SUS CONSTRAINS
+
+CREATE TABLE detalles_ordenes (
+    numeroorden VARCHAR2(5) NOT NULL,
+    codproducto VARCHAR2(5) NOT NULL,
+    cantidad    NUMBER(3) NOT NULL
+);
+
+ALTER TABLE detalles_ordenes ADD CONSTRAINT detalles_ordenes_pk PRIMARY KEY ( numeroorden,
+                                                                              codproducto );
+
+ALTER TABLE detalles_ordenes
+    ADD CONSTRAINT detalle_orden_ordenes_fk FOREIGN KEY ( numeroorden )
+        REFERENCES ordenes ( numero );
+
+ALTER TABLE detalles_ordenes
+    ADD CONSTRAINT detalle_orden_productos_fk FOREIGN KEY ( codproducto )
+        REFERENCES productos ( cod );
+
+ALTER TABLE detalles_ordenes ADD CONSTRAINT CK_cantidad_ordenes CHECK (cantidad BETWEEN 0 AND 1000);
+
+-- CREACIÓN TABLA FACTURAS CON SUS CONSTRAINS Y SECUENCIA
+
+CREATE TABLE facturas (
+    numero      VARCHAR2(5) NOT NULL,
+    fecha       DATE NOT NULL,
+    montototal  NUMBER(10, 2) NOT NULL,
+    idcliente   VARCHAR2(5) NOT NULL,
+    numeroorden VARCHAR2(5) NOT NULL
+);
+
+ALTER TABLE facturas ADD CONSTRAINT facturas PRIMARY KEY ( numero );
+
+ALTER TABLE facturas ADD CONSTRAINT facturas__un UNIQUE ( numeroorden );
+
+ALTER TABLE facturas
+    ADD CONSTRAINT facturas_clientes_fk FOREIGN KEY ( idcliente )
+        REFERENCES clientes ( id );
+
+ALTER TABLE facturas
+    ADD CONSTRAINT facturas_ordenes_fk FOREIGN KEY ( numeroorden )
+        REFERENCES ordenes ( numero );
+
+CREATE SEQUENCE numero_facturas
+INCREMENT BY  1
+START WITH 1;

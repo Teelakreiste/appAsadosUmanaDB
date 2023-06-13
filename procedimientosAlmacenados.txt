@@ -1,0 +1,144 @@
+/* 
+*INTEGRANTES:
+*JOSÉ LUIS CÓRDOBA ROLDÁN
+*VALENTINA VALENCIA QUEJADA
+*OSMEL DAVID ZUÑIGA CONTRERAS
+*DUALBERT ANDRÉS MORELO OLIVARES
+*/
+
+set SERVEROUTPUT ON;
+
+-- NOTA: Ejecutar todos los procedimientos plastamos en el documento para el buen 
+-- funcionamiento del programa. Muchas gracias
+
+---- Prodecimiento para crear una nueva orden
+
+create or replace procedure actualizarOrdenes(numMesa in ordenes.mesa%type, 
+idEmp in ordenes.idempleado%type)
+is
+    numOrden int;
+begin
+    select Max(to_number(numero)) INTO numOrden
+    from ordenes;
+    if (numOrden is null)
+        then numOrden := 0;
+    end if;
+    numOrden := numOrden +1;
+    insert into ordenes (numero, mesa, idEmpleado) values (TO_CHAR(numOrden), numMesa, idEmp);
+end;
+
+----------------------------------------------------------------------------
+
+---- Procedimiento para insertar productos en detalles de ordenes de la ultima orden generada
+
+create or replace procedure actualizarDetalles(codProd in detalles_ordenes.codproducto%type, cant in detalles_ordenes.cantidad%type)
+is
+numOrden int;
+begin
+
+	select Max(to_number(numero)) INTO numOrden from ordenes;
+	insert into detalles_ordenes (numeroOrden, codProducto, cantidad) values (numOrden, codProd, cant);
+end;
+
+----------------------------------------------------------------------------
+
+---- Prodecimiento para generar la factura de la ultima orden generada
+
+create or replace procedure crearFactura(idCli in clientes.id%type)
+is 
+numOrden int;
+precioTotal facturas.montototal%type;
+begin
+    select Max(to_number(ordenes.numero)) INTO numOrden
+    from ordenes;
+
+    SELECT SUM(precio*cantidad) into precioTotal
+    FROM ordenes INNER JOIN detalles_ordenes ON numero = numeroOrden INNER JOIN productos P ON cod = codProducto
+    WHERE ordenes.numero = numOrden;
+
+    insert into facturas (numero, fecha, montoTotal, idCliente, numeroOrden) values (numOrden, to_char(SYSDATE), precioTotal, idCli, numOrden);
+end;
+
+
+---- Bloque anonimo para ejecutar los tres procedimientos anteriores
+
+DECLARE
+BEGIN
+actualizarOrdenes('7', '003');
+actualizarDetalles('1020', 5);
+actualizarDetalles('1010', 1);
+actualizarDetalles('1013', 2);
+crearFactura('104');
+END;
+
+----------------------------------------------------------------------------
+
+---- Prodecimiento para obtener los datos de la última factura generada.
+
+create or replace procedure datosFactura(numFactura out int,
+    empNombre out empleados.nombre%type,
+    empApellido out empleados.nombre%type,
+    fech out facturas.fecha%type,
+    monto out facturas.montototal%type,
+    cliNombre out clientes.nombre%type)
+is
+begin
+select Max(to_number(numero)) INTO numFactura from ordenes;
+
+select empleados.nombre, empleados.apellido, to_char(facturas.fecha), facturas.montototal, clientes.nombre INTO 
+empNombre, empApellido, fech, monto, cliNombre
+from empleados inner join ordenes on empleados.id = ordenes.idempleado
+inner join facturas on ordenes.numero = facturas.numeroorden
+inner join clientes on facturas.idcliente = clientes.id
+where numeroOrden = numFactura;
+end;
+
+
+-- Bloque anonimo para llamar al prodecimiento anterior (datosFactura)
+
+DECLARE
+numFactura int;
+empNombre empleados.nombre%type;
+empApellido empleados.nombre%type;
+fech facturas.fecha%type;
+monto facturas.montototal%type;
+cliNombre clientes.nombre%type;
+BEGIN
+datosFactura(numFactura, empNombre, empApellido, fech, monto, cliNombre);
+dbms_output.put_line('Factura #' || numFactura || '. Atendido por: ' || 
+	empNombre || ' ' || empApellido ||'. Cliente: ' || cliNombre || '. Fecha: ' || 
+	fech || '. Monto total: ' || monto);
+END;
+
+----------------------------------------------------------------------------
+
+---- Prodecimiento para obtener el total de ventas del día, mes y año actual
+
+create or replace procedure totalventas(tDia out facturas.montototal%type, tMes out facturas.montototal%type, tAnyio out facturas.montototal%type)
+is
+begin
+select sum(montototal) into tDia from facturas where fecha = to_char(sysdate);
+
+select sum(montototal) into tMes from facturas where EXTRACT(MONTH FROM
+TO_DATE(to_char(fecha), 'DD/MM/YYYY')) = EXTRACT(MONTH FROM
+TO_DATE(to_char(sysdate), 'DD/MM/YYYY'));
+
+select sum(montototal) into tAnyio from facturas 
+where EXTRACT(YEAR FROM TO_DATE(to_char(fecha), 'DD/MM/YYYY')) = EXTRACT(YEAR FROM TO_DATE(to_char(sysdate), 'DD/MM/YYYY'));
+
+end;
+
+-- Bloque anonimo para llamar al prodecimiento anterior (totalventas)
+
+DECLARE
+tDia facturas.montototal%type;
+tMes facturas.montototal%type;
+tAnyio facturas.montototal%type;
+BEGIN
+totalventas(tDia, tMes, tAnyio);
+dbms_output.put_line('TOTAL DE VENTAS. Día: $' || 
+	tDia ||' COP. Mes: $' || tMes || ' COP. Año: $' || 
+	tAnyio || ' COP.');
+END;
+
+----------------------------------------------------------------------------

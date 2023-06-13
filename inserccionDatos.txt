@@ -1,0 +1,102 @@
+/* 
+*INTEGRANTES:
+*JOSÉ LUIS CÓRDOBA ROLDÁN
+*VALENTINA VALENCIA QUEJADA
+*OSMEL DAVID ZUÑIGA CONTRERAS
+*DUALBERT ANDRÉS MORELO OLIVARES
+*/
+
+--INSETAR DATOS EMPLEADOS
+
+INSERT INTO empleados VALUES ('001', 'Monica', 'Rojas', 'Medellin','3124565', '854324', 'Gerente');
+INSERT INTO empleados VALUES ('002', 'Bob', 'Esponja', 'Bogota','3135465', '899304', 'Chef');
+INSERT INTO empleados VALUES ('003', 'Patricio', 'Estrella', 'Medellin','3235435', '99102', 'Mesero');
+INSERT INTO empleados VALUES ('004', 'Cal', 'Lamardo', 'Manizales','3034432', '888021', 'Cajero');
+INSERT INTO empleados VALUES ('005', 'Timy', 'Torner', 'Apartado','3135443', '09234', 'Mesero');
+INSERT INTO empleados VALUES ('006', 'Maria', 'Crucero', 'Apartado','31483729', '482619', 'Mesero');
+INSERT INTO empleados VALUES ('007', 'Maroneli', 'Simonetha', 'Apartado','31342343', '837102', 'Chef');
+INSERT INTO empleados VALUES ('008', 'Younes', 'Marco', 'Apartado','31392743', '837102', 'Mesero');
+INSERT INTO empleados VALUES ('009', 'Iria', 'Garcia', 'Apartado','35927340', '837102', 'Mesero');
+
+--INSETAR DATOS ACCESOS
+
+INSERT INTO accesos VALUES ('001', 'admin', 'admin');
+INSERT INTO accesos VALUES ('009', 'iriagar', 'iriagar');
+INSERT INTO accesos VALUES ('002', 'patri', 'espon');
+
+--INSERTAR DATOS PRODUCTOS
+
+INSERT INTO productos VALUES ('1010', 'Solomito', 22000);
+INSERT INTO productos VALUES ('1011', 'Pechuga', 18000);
+INSERT INTO productos VALUES ('1012', 'Chuleta', 30000);
+INSERT INTO productos VALUES ('1013', 'Coca Cola', 2500);
+INSERT INTO productos VALUES ('1014', 'Inca Kola', 2000);
+INSERT INTO productos VALUES ('1015', 'Churrazco', 22000);
+INSERT INTO productos VALUES ('1016', 'Punta de anca', 22000);
+INSERT INTO productos VALUES ('1017', 'Costilla', 30000);
+INSERT INTO productos VALUES ('1018', 'Cañon de cerdo', 22000);
+INSERT INTO productos VALUES ('1019', 'Trifasico', 20000);
+INSERT INTO productos VALUES ('1020', 'Aguila light', 4000);
+INSERT INTO productos VALUES ('1021', 'Hit', 3000);
+INSERT INTO productos VALUES ('1022', 'Agua', 2000);
+INSERT INTO productos VALUES ('1023', 'Superpicada', 50000);
+
+-- INSERTAR DATOS CLIENTE
+
+INSERT INTO clientes VALUES ('101', 'Amador');
+INSERT INTO clientes VALUES ('102', 'Linda');
+INSERT INTO clientes VALUES ('103', 'Samanta');
+INSERT INTO clientes VALUES ('104', 'Stuard');
+INSERT INTO clientes VALUES ('105', 'Pedrito');
+INSERT INTO clientes VALUES ('106', 'Didac');
+
+-- INSERTAR DATOS ORDENES
+
+INSERT INTO ordenes VALUES ('1', '1', '003');
+INSERT INTO ordenes VALUES ('2', '2', '005');
+INSERT INTO ordenes VALUES ('3', '3', '005');
+INSERT INTO ordenes VALUES ('4', '5', '005');
+INSERT INTO ordenes VALUES ('5', '4', '005');
+INSERT INTO ordenes VALUES ('6', '7', '003');
+INSERT INTO ordenes VALUES ('7', '5', '006');
+INSERT INTO ordenes VALUES ('8', '2', '008');
+INSERT INTO ordenes VALUES ('9', '6', '009');
+
+-- INSERTAR DETALLES ORDENES
+
+INSERT INTO detalles_ordenes VALUES ('1', '1010', 3);
+INSERT INTO detalles_ordenes VALUES ('1', '1015', 5);
+INSERT INTO detalles_ordenes VALUES ('1', '1016', 8);
+INSERT INTO detalles_ordenes VALUES ('1', '1011', 10);
+INSERT INTO detalles_ordenes VALUES ('2', '1010', 4);
+INSERT INTO detalles_ordenes VALUES ('3', '1021', 1);
+INSERT INTO detalles_ordenes VALUES ('3', '1022', 4);
+INSERT INTO detalles_ordenes VALUES ('3', '1012', 1);
+INSERT INTO detalles_ordenes VALUES ('4', '1020', 1);
+INSERT INTO detalles_ordenes VALUES ('4', '1023', 3);
+INSERT INTO detalles_ordenes VALUES ('4', '1010', 1);
+INSERT INTO detalles_ordenes VALUES ('5', '1022', 4);
+INSERT INTO detalles_ordenes VALUES ('5', '1021', 4);
+INSERT INTO detalles_ordenes VALUES ('5', '1018', 4);
+INSERT INTO detalles_ordenes VALUES ('6', '1013', 9);
+INSERT INTO detalles_ordenes VALUES ('6', '1019', 4);
+INSERT INTO detalles_ordenes VALUES ('6', '1011', 4);
+INSERT INTO detalles_ordenes VALUES ('7', '1023', 1);
+INSERT INTO detalles_ordenes VALUES ('7', '1021', 1);
+INSERT INTO detalles_ordenes VALUES ('8', '1012', 1);
+INSERT INTO detalles_ordenes VALUES ('8', '1014', 2);
+INSERT INTO detalles_ordenes VALUES ('8', '1022', 1);
+INSERT INTO detalles_ordenes VALUES ('8', '1010', 1);
+INSERT INTO detalles_ordenes VALUES ('9', '1013', 1);
+
+-- INSERTAR DATOS FACTURAS
+
+INSERT INTO facturas VALUES ('1', '10/08/2021', 197280, '101', '1');
+INSERT INTO facturas VALUES ('2', '23/12/2021', 12000, '105', '2');
+INSERT INTO facturas VALUES ('3', '06/01/2022', 18000, '101', '3');
+INSERT INTO facturas VALUES ('4', '30/08/2021', 157000, '103', '4');
+INSERT INTO facturas VALUES ('5', '02/02/2022', 94000, '102', '5');
+INSERT INTO facturas VALUES ('6', '15/06/2018', 153500, '102', '6');
+INSERT INTO facturas VALUES ('7', '05/08/2021', 17400, '104', '7');
+INSERT INTO facturas VALUES ('8', '06/06/2020', 53000, '106', '8');
+INSERT INTO facturas VALUES ('9', '19/10/2020', 1500, '104', '9');

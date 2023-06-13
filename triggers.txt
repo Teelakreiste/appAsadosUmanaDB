@@ -1,0 +1,38 @@
+/* 
+*INTEGRANTES:
+*JOSÉ LUIS CÓRDOBA ROLDÁN
+*VALENTINA VALENCIA QUEJADA
+*OSMEL DAVID ZUÑIGA CONTRERAS
+*DUALBERT ANDRÉS MORELO OLIVARES
+*/
+
+---TRIGGER que se ejecute en la actualización o en la inserción y 
+---que controle que solo haya un unico empleado con el cargo gerente.
+CREATE OR REPLACE TRIGGER t_insercion_gerente
+BEFORE INSERT OR UPDATE ON empleados
+FOR EACH ROW
+DECLARE
+BEGIN
+    IF :new.cargo='Gerente' THEN
+        raise_application_error(-20001, 'El asadero solo cuenta con gerente');
+    END IF;
+END;
+
+-- INSERT INTO empleados VALUES ('010', 'Irmy', 'Gartah', 'Apartado','35927432', '482332', 'Gerente');
+
+---TRIGGER que se ejecute en la creación de una nueva orden y 
+---que controle que los empleados con cargo Chef no puedan realizar ordenes.
+CREATE OR REPLACE TRIGGER t_crear_orden
+BEFORE INSERT ON ordenes
+FOR EACH ROW 
+DECLARE
+empCargo empleados.cargo%type;
+BEGIN
+    select cargo into empCargo from empleados where id = :new.idEmpleado;
+    IF empCargo = 'Chef' THEN
+        raise_application_error(-20010, 'Los cocineros no pueden generar ordenes');
+    END IF;
+END;
+
+
+-- INSERT INTO ordenes VALUES ('32', '7', '002');
